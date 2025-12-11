@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title><%= item.title %> - 포트폴리오 상세</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>개인 포트폴리오</h1>
+    <nav>
+      <a href="/portfolio">포트폴리오</a>
+      <a href="/reflections">개인 소감</a>
+
+      <% if (currentUser) { %>
+        <span class="nav-user"><%= currentUser.name %>님</span>
+        <a href="/portfolio/new" class="btn btn-primary">포트폴리오 등록</a>
+        <a href="/reflections/new" class="btn btn-outline">소감 작성</a>
+        <a href="/logout">로그아웃</a>
+      <% } else { %>
+        <span class="nav-user"></span>
+        <a href="/login" class="btn btn-outline">로그인</a>
+        <a href="/register" class="btn btn-primary">회원가입</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+
+<main class="page-container">
+  <div class="detail-box">
+
+    <!-- 제목 + 메타 -->
+    <div class="detail-header">
+      <div class="detail-title"><%= item.title %></div>
+      <div class="detail-meta">
+        <span>카테고리: <%= item.category %></span>
+        <span>작성자: <%= item.user_name %></span>
+        <% if (item.created_at) { %>
+          <span>작성일: <%= item.created_at.toISOString().slice(0, 10) %></span>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- 요약 -->
+    <% if (item.summary) { %>
+      <div>
+        <div class="detail-section-title">요약</div>
+        <p><%= item.summary %></p>
+      </div>
+    <% } %>
+
+    <!-- 내용 -->
+    <div>
+      <div class="detail-section-title">내용</div>
+      <pre><%= item.content %></pre>
+    </div>
+
+    <!-- 링크들 -->
+    <div class="detail-links">
+      <% if (item.github_url) { %>
+        <a href="<%= item.github_url %>" target="_blank" class="btn btn-outline">Github 보기</a>
+      <% } %>
+      <% if (item.demo_url) { %>
+        <a href="<%= item.demo_url %>" target="_blank" class="btn btn-outline">Demo 보기</a>
+      <% } %>
+    </div>
+
+    <!-- 수정 / 삭제 -->
+    <% if (currentUser && currentUser.user_id === item.user_id) { %>
+      <div class="detail-actions">
+        <form action="/portfolio/<%= item.item_id %>/edit" method="get">
+          <button type="submit" class="btn btn-primary">수정</button>
+        </form>
+
+        <form action="/portfolio/<%= item.item_id %>/delete" method="post"
+              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+          <button type="submit" class="btn btn-danger">삭제</button>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- 목록으로 -->
+    <p class="detail-back">
+      <a href="/portfolio">목록으로</a>
+    </p>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>개인 포트폴리오</h1>
+    <nav>
+      <a href="/portfolio">포트폴리오</a>
+      <a href="/reflections">개인 소감</a>
+
+      <% if (currentUser) { %>
+        <span class="nav-user"><%= currentUser.name %>님</span>
+        <a href="/portfolio/new" class="btn btn-primary">포트폴리오 등록</a>
+        <a href="/reflections/new" class="btn btn-outline">소감 작성</a>
+        <a href="/logout">로그아웃</a>
+      <% } else { %>
+        <span class="nav-user"></span>
+        <a href="/login" class="btn btn-outline">로그인</a>
+        <a href="/register" class="btn btn-primary">회원가입</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h2 class="auth-title">로그인</h2>
+    <p class="auth-subtitle">포트폴리오를 등록·수정하려면 먼저 로그인하세요.</p>
+
+    <% if (typeof error !== 'undefined') { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
+
+    <form action="/login" method="post">
+      <div class="form-row">
+        <label>이메일</label>
+        <input type="email" name="email" placeholder="example@inha.ac.kr" required>
+      </div>
+      <div class="form-row">
+        <label>비밀번호</label>
+        <input type="password" name="password" placeholder="비밀번호를 입력하세요" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">로그인</button>
+    </form>
+
+    <div class="auth-footer">
+      <span>아직 계정이 없나요? </span>
+      <a href="/register">회원가입</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

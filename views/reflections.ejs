@@ -1,0 +1,32 @@
+<!-- views/reflections.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>개인 소감</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>개인 소감</h1>
+
+<% if (currentUser) { %>
+  <p><a href="/reflections/new">소감 작성</a></p>
+<% } %>
+
+<% if (reflections.length === 0) { %>
+  <p>등록된 소감이 없습니다.</p>
+<% } else { %>
+  <ul>
+  <% reflections.forEach(function(r) { %>
+    <li>
+      <h3><%= r.title %></h3>
+      <p><pre><%= r.content %></pre></p>
+      <small>작성자: <%= r.user_name %> / <%= r.created_at.toISOString().slice(0, 10) %></small>
+    </li>
+  <% }); %>
+  </ul>
+<% } %>
+
+<p><a href="/portfolio">포트폴리오로 돌아가기</a></p>
+</body>
+</html>

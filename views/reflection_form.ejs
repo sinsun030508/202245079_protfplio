@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>개인 소감 작성</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>개인 포트폴리오</h1>
+    <nav>
+      <a href="/portfolio">포트폴리오</a>
+      <a href="/reflections">개인 소감</a>
+      <% if (currentUser) { %>
+        <span class="nav-user"><%= currentUser.name %>님</span>
+        <a href="/portfolio/new" class="btn btn-primary">포트폴리오 등록</a>
+        <a href="/reflections/new" class="btn btn-outline">소감 작성</a>
+        <a href="/logout">로그아웃</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+
+<div class="form-wrapper">
+  <div class="form-card">
+
+    <h1>개인 소감 작성</h1>
+
+    <form action="/reflections/new" method="post">
+      <div class="form-row">
+        <label>제목</label>
+        <input type="text" name="title" required>
+      </div>
+
+      <div class="form-row">
+        <label>내용</label>
+        <textarea name="content" rows="10" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+
+    <p class="mt-3">
+      <a href="/reflections">소감 목록</a>
+    </p>
+
+  </div>
+</div>
+
+</body>
+</html>

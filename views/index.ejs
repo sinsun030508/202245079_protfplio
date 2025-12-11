@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>포트폴리오 메인</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>개인 포트폴리오</h1>
+    <nav>
+      <a href="/portfolio">포트폴리오</a>
+      <a href="/reflections">개인 소감</a>
+
+      <% if (currentUser) { %>
+        <span class="nav-user"><%= currentUser.name %>님</span>
+        <a href="/portfolio/new" class="btn btn-primary">포트폴리오 등록</a>
+        <a href="/reflections/new" class="btn btn-outline">소감 작성</a>
+        <a href="/logout">로그아웃</a>
+      <% } else { %>
+        <span class="nav-user"></span>
+        <a href="/login" class="btn btn-outline">로그인</a>
+        <a href="/register" class="btn btn-primary">회원가입</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+
+<main class="page-container">
+  <h2 class="page-title">포트폴리오 목록</h2>
+
+  <% if (items.length === 0) { %>
+    <p class="mt-2">등록된 포트폴리오가 없습니다.</p>
+  <% } else { %>
+    <ul class="portfolio-list">
+      <% items.forEach(function(item) { %>
+        <li class="portfolio-item">
+          <h3>
+            <a href="/portfolio/<%= item.item_id %>"><%= item.title %></a>
+          </h3>
+          <% if (item.summary) { %>
+            <p><%= item.summary %></p>
+          <% } %>
+          <div class="portfolio-meta">
+            <span><%= item.category %></span> ·
+            <span>작성자: <%= item.user_name %></span>
+          </div>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</main>
+</body>
+</html>
